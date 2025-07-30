@@ -13,10 +13,14 @@ from django.http import HttpResponse
 @api_view(['GET'])
 def list_recipes(request):
     email = request.GET.get('email')
+    password = request.GET.get('password')
 
     user = CustomUser.objects.filter(email=email, role='viewer', is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid User or User must be a viewer.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     recipes = Recipe.objects.filter(is_active=True)
     data = []
@@ -38,10 +42,14 @@ def list_recipes(request):
 def recipe_detail(request):
     email = request.GET.get('email')
     recipe_id = request.GET.get('recipe_id')
+    password = request.GET.get('password')
 
     user = CustomUser.objects.filter(email=email, role='viewer', is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid User or User must be a viewer.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         recipe = Recipe.objects.get(id=recipe_id, is_active=True)
@@ -71,10 +79,14 @@ def recipe_detail(request):
 def mark_favourite(request):
     user_email = request.data.get('email')
     recipe_id = request.data.get('recipe_id')
+    password = request.data.get('password')
 
     user = CustomUser.objects.filter(email=user_email, role='viewer', is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid User or User must be a viewer.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     recipe = Recipe.objects.filter(id=recipe_id, is_active=True).first()
     if not recipe:

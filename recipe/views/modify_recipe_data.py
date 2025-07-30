@@ -7,10 +7,13 @@ from datetime import timedelta
 
 # this will update the recipe, instruction and instruction
 @api_view(['PUT'])
-def modify_recipe(request, recipe_id, email):
+def modify_recipe(request, recipe_id, email, password):
     user = CustomUser.objects.filter(email=email, role='creator', is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid creator.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     recipe = Recipe.objects.filter(id=recipe_id, custom_user=user).first()
     if not recipe:

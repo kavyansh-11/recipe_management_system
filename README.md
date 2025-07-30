@@ -7,7 +7,7 @@ This is a Django-based backend system to manage recipes. It supports role-based 
 ## Tech Stack
 
 - **Backend**: Django (Python)
-- **Authentication**: Email-based (for role validation)
+- **Authentication**: Email-based and Password (for role validation)
 - **API**: Django REST Framework (DRF)
 - **File Handling**: Excel file upload for bulk recipe creation
 - **PDF Generation**: Recipes downloadable as PDF

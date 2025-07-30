@@ -17,10 +17,11 @@ def validate_column(column,mandatory_column):
 # ingredient_columns = ['recipe_name','ingredient_name','ingredient_image']
 # instruction_columns = ['recipe_name','step_number','step']
 @api_view(['POST'])
-@validate_keys(['email','role'])
+@validate_keys(['email','password','role'])
 def upload_receipe_excel_file(request):
     data = request.data
     email = data['email']
+    password = data['password']
     role = data['role'].lower()
     
     if role!='creator':
@@ -29,6 +30,9 @@ def upload_receipe_excel_file(request):
     user = CustomUser.objects.filter(email=email, role=role, is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid User.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     upload_recipe = request.FILES.get('recipe')
     upload_ingredient = request.FILES.get('ingredient')

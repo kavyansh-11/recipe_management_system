@@ -8,12 +8,17 @@ from recipe.models import Recipe, Instruction, Ingredient, CustomUser
 @api_view(['GET'])
 def view_recipe_data(request):
     user_email = request.GET.get('email')
+    password = request.GET.get('password')
+
     if not user_email:
         return Response({'status': 'error', 'message': 'User email param is required.'}, status=status.HTTP_400_BAD_REQUEST)
     
     user = CustomUser.objects.filter(email=user_email, role='creator', is_active=True).first()
     if not user:
         return Response({'status': 'error', 'message': 'Invalid User or User must be creator.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({'status': 'error', 'message': 'Incorrect password.'}, status=status.HTTP_400_BAD_REQUEST)
 
     recipe = Recipe.objects.filter(is_active=True)
     if not recipe:
