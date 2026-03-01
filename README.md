@@ -1,6 +1,6 @@
 # Recipe Management System
 
-This is a Django-based backend system to manage recipes. It supports role-based access for **Creators** and **Viewers**, allowing creators to upload, modify, and delete recipes, while viewers can browse, mark favourites, and download recipe PDFs.
+This is a Django-based backend system to manage recipes. It supports role-based access for **Creators** and **Viewers**, allowing creators to upload, modify, and delete recipes, while viewers can browse, mark favourites.
 
 ----------
 
@@ -10,7 +10,6 @@ This is a Django-based backend system to manage recipes. It supports role-based 
 - **Authentication**: Email-based and Password (for role validation)
 - **API**: Django REST Framework (DRF)
 - **File Handling**: Excel file upload for bulk recipe creation
-- **PDF Generation**: Recipes downloadable as PDF
 
 ----------
 
@@ -19,7 +18,6 @@ This is a Django-based backend system to manage recipes. It supports role-based 
 - Recipe creation by Creators via JSON or Excel file
 - Add ingredients and instructions per recipe
 - Bulk upload support using formatted Excel files
-- PDF download of individual recipes
 - Mark favourite recipes by viewers
 - Filter recipes per creator and view details
 - Basic role validation by email (Creator or Viewer)
@@ -37,7 +35,6 @@ This is a Django-based backend system to manage recipes. It supports role-based 
 - Can view all recipes
 - View specific detailed recipe info
 - Mark recipes as favourites
-- Download recipe as a PDF
 
 ----------
 
