@@ -6,6 +6,9 @@ __pycache__/
 dist/
 build/
 
+**/migrations/*
+!**/migrations/__init__.py
+
 # Env
 venv/
 .env

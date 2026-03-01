@@ -1,18 +1,18 @@
 from django.urls import path
-from recipe.views import create_user, upload_recipe_data, view_recipe_data, delete_recipe_data, modify_recipe_data, viewer
+from recipe.views import *
 
 urlpatterns = [
+    path('create_user/', CreateUser.as_view(), name='create-user'),
+    path('login_view/', LoginView.as_view(), name='login-view'),
+
     # creator
-    path('create_user/', create_user.create_user, name='create_user'),
-    path('upload_recipe_data/', upload_recipe_data.upload_receipe_excel_file, name="upload_receipe_excel_file"),
-    path('view_recipe_data/', view_recipe_data.view_recipe_data, name="view_recipe_data"),
-    path('delete_recipe/<int:recipe_id>/<str:email>/<str:password>/', delete_recipe_data.delete_recipe, name="delete_recipe"),
-    path('modify_recipe/<int:recipe_id>/<str:email>/<str:password>/', modify_recipe_data.modify_recipe, name="modify_recipe"),
+    path('recipe/', Receipe.as_view(), name="recipe"),
+    path('recipe/<int:recipe_id>/', Receipe.as_view(), name="recipe"),
 
     # viewer
-    path('all_recipe/', viewer.list_recipes, name="list_recipes"),
-    path('recipe_detail/', viewer.recipe_detail, name="recipe_detail"),
-    path('mark_favourite/', viewer.mark_favourite, name="mark_favourite"),
-    path('recipes/<int:recipe_id>/pdf/', viewer.download_recipe_pdf, name="download_recipe_pdf")
+    path('recipe_list/', RecipeList.as_view(), name="recipe-list"),
+    path('recipe_detail/<int:recipe_id>/', RecipeDetail.as_view(), name="recipe_detail"),
+    path('mark_favourite/<int:recipe_id>/', MarkFavorite.as_view(), name="mark_favourite"),
+    # path('recipes/<int:recipe_id>/pdf/', viewer.download_recipe_pdf, name="download_recipe_pdf")
 
 ]
